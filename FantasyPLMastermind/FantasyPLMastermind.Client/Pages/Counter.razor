@@ -1,0 +1,69 @@
+﻿@page "/counter"
+@rendermode InteractiveWebAssembly
+@inject HttpClient Http
+
+
+<PageTitle>FPL Table</PageTitle>
+
+<h1>Current rankings</h1>
+
+<table class="table">
+    <thead>     
+        <tr>
+            <th>ID</th>
+            <th>Event Total</th>
+            <th>Player Name</th>
+            <th>Rank</th>
+            <th>Last Rank</th>
+            <th>Rank Sort</th>
+            <th>Total</th>
+            <th>Entry</th>
+            <th>Entry Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var manager in managers)
+        {
+            <tr>
+                <td>@manager.id</td>
+                <td>@manager.event_total</td>
+                <td>@manager.player_name</td>
+                <td>@manager.rank</td>
+                <td>@manager.last_rank</td>
+                <td>@manager.rank_sort</td>
+                <td>@manager.total</td>
+                <td>@manager.entry</td>
+                <td>
+                    <a href="/manager/@manager.entry">
+                        @manager.entry_name
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+ 
+
+
+
+
+@code {
+    List<Manager> managers = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        string baseUrl = "https://localhost:7214/";
+        try
+        {
+            managers = await Http.GetFromJsonAsync<List<Manager>>($"{baseUrl}api/manager");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+            // Handle or log the exception
+        }
+    }
+
+}

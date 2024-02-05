@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\FantasyPLMastermind.Client\Pages\PageTitle.razor" Link="PageTitle.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FantasyPLMastermind.Client\FantasyPLMastermind.Client.csproj" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.0" />
+  </ItemGroup>
+
+</Project>

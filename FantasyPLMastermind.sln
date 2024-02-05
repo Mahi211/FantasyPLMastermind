@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34322.80
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FantasyPLMastermind", "FantasyPLMastermind\FantasyPLMastermind\FantasyPLMastermind.csproj", "{E852BA82-896B-4F27-B84C-F1BD7F1652D9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FantasyPLMastermind.Client", "FantasyPLMastermind\FantasyPLMastermind.Client\FantasyPLMastermind.Client.csproj", "{B69B85AF-40C5-421C-AD14-8667A541EEF4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E852BA82-896B-4F27-B84C-F1BD7F1652D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E852BA82-896B-4F27-B84C-F1BD7F1652D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E852BA82-896B-4F27-B84C-F1BD7F1652D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E852BA82-896B-4F27-B84C-F1BD7F1652D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B69B85AF-40C5-421C-AD14-8667A541EEF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B69B85AF-40C5-421C-AD14-8667A541EEF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B69B85AF-40C5-421C-AD14-8667A541EEF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B69B85AF-40C5-421C-AD14-8667A541EEF4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B0C6CA36-8C1E-454C-96F4-DCE9AD726F45}
+	EndGlobalSection
+EndGlobal

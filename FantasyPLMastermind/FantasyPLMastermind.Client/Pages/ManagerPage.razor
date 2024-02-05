@@ -1,0 +1,33 @@
+﻿@page "/manager/{teamId:int}"
+@rendermode InteractiveWebAssembly
+@inject HttpClient Http
+
+@code {
+    ManagerInfo teamData = new();
+    
+    [Parameter]
+    public int teamId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        string baseUrl = "https://localhost:7214/";
+        try
+        {
+            teamData = await Http.GetFromJsonAsync<ManagerInfo>($"{baseUrl}api/manager/{teamId}");
+            
+
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+}
+
+<h3>Squad: @teamData.name</h3>
+<h3>Player Name: @teamData.player_first_name</h3>
+<h3>Current Gameweek Points: @teamData.summary_event_points</h3>
+<h3>Rank All: @teamData.summary_overall_rank</h3>
+<h3>Total Points: @teamData.summary_overall_points</h3>
+<h3>Gameweek: @teamData.last_deadline_total_transfers</h3>
+@teamData.current_event
