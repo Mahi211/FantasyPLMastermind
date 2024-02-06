@@ -1,6 +1,6 @@
 ﻿namespace FantasyPLMastermind.Shared
 {
-    public class Leagues
+    public class FplLeague
     {
 
         public New_Entries new_entries { get; set; }

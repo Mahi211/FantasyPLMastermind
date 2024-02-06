@@ -2,7 +2,7 @@
 @rendermode InteractiveWebAssembly
 @inject HttpClient Http
 
-
+<Styles></Styles>
 <PageTitle>FPL Table</PageTitle>
 
 <h1>Current rankings</h1>
@@ -24,18 +24,34 @@
     <tbody>
         @foreach (var manager in managers)
         {
+            int i = Math.Abs(manager.rank - manager.last_rank);
+           
             <tr>
                 <td>@manager.id</td>
-                <td>@manager.event_total</td>
-                <td>@manager.player_name</td>
-                <td>@manager.rank</td>
+                <td>@manager.gameweekPoints</td>
+                <td>@manager.playerName</td>
+                <td>                   
+                    @manager.rank @if (i != 0)
+                    {
+                        <span>@i</span>
+
+                        @if (manager.rank - manager.last_rank > 0)
+                        {
+                            <button class="arrow-up" title="Rank Increase">&#x2191;</button>
+                        }
+                        else if (manager.rank - manager.last_rank < 0)
+                        {
+                            <button class="arrow-down" title="Rank Decrease">&#x2193;</button>
+                        }
+                    }
+                </td>
                 <td>@manager.last_rank</td>
                 <td>@manager.rank_sort</td>
-                <td>@manager.total</td>
+                <td>@manager.totalPoints</td>
                 <td>@manager.entry</td>
                 <td>
                     <a href="/manager/@manager.entry">
-                        @manager.entry_name
+                        @manager.teamName
                     </a>
                 </td>
             </tr>
@@ -49,6 +65,7 @@
 
 
 @code {
+    
     List<Manager> managers = new();
 
     protected override async Task OnInitializedAsync()

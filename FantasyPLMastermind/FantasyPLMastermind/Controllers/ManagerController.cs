@@ -3,7 +3,6 @@ using FantasyPLMastermind.Shared;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using FantasyPLMastermind.Client.Shared;
-using System.Xml.Linq;
 namespace FantasyPLMastermind.Controllers
 {
     [ApiController]
@@ -21,7 +20,7 @@ namespace FantasyPLMastermind.Controllers
                 var client = new HttpClient();
                 var result = await client.GetAsync(endpoint);
                 var json = await result.Content.ReadAsStringAsync();
-                var league = JsonSerializer.Deserialize<Leagues>(json);
+                var league = JsonSerializer.Deserialize<FplLeague>(json);
                 List<Manager> myManagers = new();
 
                 foreach (var manager in league.standings.results)
@@ -29,14 +28,14 @@ namespace FantasyPLMastermind.Controllers
                     myManagers.Add(new Manager
                     {
                         id = manager.id,
-                        event_total = manager.event_total,
-                        player_name = manager.player_name,
+                        gameweekPoints = manager.event_total,
+                        playerName = manager.player_name,
                         rank = manager.rank,
                         last_rank = manager.last_rank,
                         rank_sort = manager.rank_sort,
-                        total = manager.total,
+                        totalPoints = manager.total,
                         entry = manager.entry,
-                        entry_name = manager.entry_name
+                        teamName = manager.entry_name
                     });
 
                 }
@@ -49,25 +48,34 @@ namespace FantasyPLMastermind.Controllers
             
         }
         [HttpGet("{teamId:int}")]
-        public async Task<ActionResult<ManagerInfo>> GetManager(int teamId)
+        public async Task<ActionResult<Manager>> GetManagerData(int teamId)
         {
             try
             {
-
+                int leagueId = 918532;
                 var endpoint = new Uri($"https://fantasy.premierleague.com/api/entry/{teamId}/");
                 var client = new HttpClient();
                 var result = await client.GetAsync(endpoint);
                 var json = await result.Content.ReadAsStringAsync();
                 var managers = JsonSerializer.Deserialize<ManagerInfo>(json);
 
+                var endpoint1 = new Uri($"https://fantasy.premierleague.com/api/leagues-classic/{leagueId}/standings/");
+                var client1 = new HttpClient();
+                var result1 = await client1.GetAsync(endpoint1);
+                var json1 = await result1.Content.ReadAsStringAsync();
+                var managers1 = JsonSerializer.Deserialize<FplLeague>(json1);
 
+                var selectedManager = managers1.standings.results.Where(x => x.entry == teamId).FirstOrDefault();
 
-
-                var myManager = new ManagerInfo {
+                var myManager = new Manager {
                     id = managers.id,
-                    name = managers.name,
-                    summary_event_rank = managers.summary_event_rank,
-                    summary_overall_rank = managers.summary_overall_rank,
+                    teamName = managers.name,
+                    totalPoints = selectedManager.total,
+                    gameweekPoints = selectedManager.event_total,
+                    rank = selectedManager.rank,
+                    last_rank = selectedManager.last_rank,
+                    rank_sort = selectedManager.rank_sort,
+
                 };
                 
                 return myManager;

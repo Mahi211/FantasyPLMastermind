@@ -2,9 +2,11 @@
 @rendermode InteractiveWebAssembly
 @inject HttpClient Http
 
+<Styles> </Styles>
 @code {
-    ManagerInfo teamData = new();
-    
+    Manager teamData = new();
+    List<Player> playerData = new();
+
     [Parameter]
     public int teamId { get; set; }
 
@@ -13,7 +15,9 @@
         string baseUrl = "https://localhost:7214/";
         try
         {
-            teamData = await Http.GetFromJsonAsync<ManagerInfo>($"{baseUrl}api/manager/{teamId}");
+            teamData = await Http.GetFromJsonAsync<Manager>($"{baseUrl}api/manager/{teamId}");
+            playerData = await Http.GetFromJsonAsync<List<Player>>($"{baseUrl}api/player/{teamId}");
+
             
 
         }
@@ -24,10 +28,38 @@
     }
 }
 
-<h3>Squad: @teamData.name</h3>
-<h3>Player Name: @teamData.player_first_name</h3>
-<h3>Current Gameweek Points: @teamData.summary_event_points</h3>
-<h3>Rank All: @teamData.summary_overall_rank</h3>
-<h3>Total Points: @teamData.summary_overall_points</h3>
-<h3>Gameweek: @teamData.last_deadline_total_transfers</h3>
-@teamData.current_event
+<div class="container">
+    <h3>Squad: @teamData.teamName</h3>
+    <div class="manager-info">
+        <p>Current Gameweek Points: @teamData.gameweekPoints</p>
+        <p>Rank in League: @teamData.rank</p>
+        <p>Total Points: @teamData.totalPoints</p>
+        <p>Last Rank: @teamData.last_rank</p>
+        <p>Rank Movement: @teamData.rank_sort</p>
+    </div>
+    
+</div>
+
+<table class="player-table">
+    <thead>
+        <tr>
+            <th>Player</th>
+            <th>Points</th>
+            <th>Team</th>
+            <th>Position</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var player in playerData)
+        {
+            <tr>
+                <td>@player.second_name</td>
+                <td>@player.event_points</td>
+                <td>@player.teamName</td>
+                <td>@player.position</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
