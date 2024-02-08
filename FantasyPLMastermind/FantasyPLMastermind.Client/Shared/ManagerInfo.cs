@@ -8,7 +8,7 @@
         public int id { get; set; }
         public DateTime joined_time { get; set; }
         public int started_event { get; set; }
-        public int favourite_team { get; set; }
+        public int? favourite_team { get; set; }
         public string player_first_name { get; set; }
         public string player_last_name { get; set; }
         public int player_region_id { get; set; }

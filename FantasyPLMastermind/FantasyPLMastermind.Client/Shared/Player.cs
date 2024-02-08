@@ -21,7 +21,7 @@
         public bool in_dreamteam { get; set; }
         public string news { get; set; }
         public DateTime? news_added { get; set; }
-        public int now_cost { get; set; }
+        public float now_cost { get; set; }
         public string photo { get; set; }
         public string points_per_game { get; set; }
         public string second_name { get; set; }

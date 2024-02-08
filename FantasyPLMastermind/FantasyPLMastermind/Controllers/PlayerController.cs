@@ -22,19 +22,28 @@ namespace FantasyPLMastermind.Controllers
             var result = await client.GetAsync(endpoint);
             var json = await result.Content.ReadAsStringAsync();
             var players = JsonSerializer.Deserialize<LeagueData>(json);
-
+            
 
             List<Player> playersData = new();
             foreach (var player in players.elements)
             {
+                float price = player.now_cost;
+                float playerPrice = (float)player.now_cost / 10;
+                var fullName = $"{player.first_name} {player.second_name}";
                 playersData.Add(new Player
                 {
                     id = player.id,
+                    web_name = player.web_name,
+                    position = (Position)player.element_type,
                     first_name = player.first_name,
                     second_name = player.second_name,
                     event_points = player.event_points,
-                    total_points = player.total_points
-
+                    total_points = player.total_points,
+                    ep_this = player.ep_this,
+                    ep_next = player.ep_next,
+                    now_cost = playerPrice,
+                    team_code = player.team_code
+                   
                 });
             }
 
@@ -83,7 +92,11 @@ namespace FantasyPLMastermind.Controllers
             {
                 var selectedPlayer = players.elements.FirstOrDefault(x => x.id == player.element);
                 var selectedTeam = players.teams.FirstOrDefault(x => x.id == selectedPlayer.team);
+                var fullName = $"{selectedPlayer.first_name} {selectedPlayer.second_name}";
+                float price = selectedPlayer.now_cost;
+                float playerPrice = price / 10;
                 
+
                 playersData.Add(new Player
                 {
                     id = selectedPlayer.id,
@@ -92,9 +105,11 @@ namespace FantasyPLMastermind.Controllers
                     event_points = selectedPlayer.event_points,
                     total_points = selectedPlayer.total_points,
                     position = (Position)selectedPlayer.element_type,
-                    web_name = selectedPlayer.web_name,
-                    teamName = selectedTeam.name
-                   
+                    web_name = fullName,
+                    teamName = selectedTeam.name,
+                    now_cost = playerPrice,
+                    
+                    
                 });
             }
 

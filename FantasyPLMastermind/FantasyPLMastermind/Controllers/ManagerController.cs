@@ -21,6 +21,7 @@ namespace FantasyPLMastermind.Controllers
                 var result = await client.GetAsync(endpoint);
                 var json = await result.Content.ReadAsStringAsync();
                 var league = JsonSerializer.Deserialize<FplLeague>(json);
+
                 List<Manager> myManagers = new();
 
                 foreach (var manager in league.standings.results)

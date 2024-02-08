@@ -10,15 +10,10 @@
 <table class="table">
     <thead>     
         <tr>
-            <th>ID</th>
-            <th>Event Total</th>
-            <th>Player Name</th>
             <th>Rank</th>
-            <th>Last Rank</th>
-            <th>Rank Sort</th>
-            <th>Total</th>
-            <th>Entry</th>
             <th>Entry Name</th>
+            <th>GW Points</th>
+            <th>Total</th>
         </tr>
     </thead>
     <tbody>
@@ -27,10 +22,7 @@
             int i = Math.Abs(manager.rank - manager.last_rank);
            
             <tr>
-                <td>@manager.id</td>
-                <td>@manager.gameweekPoints</td>
-                <td>@manager.playerName</td>
-                <td>                   
+                <td>
                     @manager.rank @if (i != 0)
                     {
                         <span>@i</span>
@@ -45,15 +37,13 @@
                         }
                     }
                 </td>
-                <td>@manager.last_rank</td>
-                <td>@manager.rank_sort</td>
-                <td>@manager.totalPoints</td>
-                <td>@manager.entry</td>
                 <td>
                     <a href="/manager/@manager.entry">
                         @manager.teamName
                     </a>
                 </td>
+                <td>@manager.gameweekPoints</td>              
+                <td>@manager.totalPoints</td>
             </tr>
         }
     </tbody>

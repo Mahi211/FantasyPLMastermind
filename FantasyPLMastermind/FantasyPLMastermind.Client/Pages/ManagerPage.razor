@@ -6,6 +6,10 @@
 @code {
     Manager teamData = new();
     List<Player> playerData = new();
+    int defCount { get; set; }
+    int midCount { get; set; }
+    int fwdCount { get; set; }
+    
 
     [Parameter]
     public int teamId { get; set; }
@@ -18,7 +22,9 @@
             teamData = await Http.GetFromJsonAsync<Manager>($"{baseUrl}api/manager/{teamId}");
             playerData = await Http.GetFromJsonAsync<List<Player>>($"{baseUrl}api/player/{teamId}");
 
-            
+            defCount = playerData.Take(11).Count(p => p.position == Position.Defender);
+            midCount = playerData.Take(11).Count(p => p.position == Position.Midfielder);
+            fwdCount = playerData.Take(11).Count(p => p.position == Position.Forward);         
 
         }
         catch (Exception ex)
@@ -36,25 +42,91 @@
         <p>Total Points: @teamData.totalPoints</p>
         <p>Last Rank: @teamData.last_rank</p>
         <p>Rank Movement: @teamData.rank_sort</p>
+        <p>Formation: @defCount-@midCount-@fwdCount</p>
     </div>
     
 </div>
+
+<div class="formation">
+    
+    <div class="line">
+        @foreach (var player in playerData.Take(11).Where(p => p.position == Position.Goalkeeper))
+        {            
+            <div class="player-card">
+                <div class="player-info">
+                    <div class="player-text">@player.web_name (@player.event_points)</div>
+                </div>
+            </div>
+        }
+    </div>
+
+    
+    <div class="line">
+        @foreach (var player in playerData.Take(11).Where(p => p.position == Position.Defender))
+        {           
+            <div class="player-card">
+                <div class="player-info">
+                    <div class="player-text">@player.web_name (@player.event_points)</div>
+                </div>
+            </div>
+        }
+    </div>
+
+    
+    <div class="line">
+        @foreach (var player in playerData.Take(11).Where(p => p.position == Position.Midfielder))
+        {           
+            <div class="player-card">
+                <div class="player-info">
+                    <div class="player-text">@player.web_name (@player.event_points)</div>
+                </div>
+            </div>
+        }
+    </div>
+
+   
+    <div class="line">
+        @foreach (var player in playerData.Take(11).Where(p => p.position == Position.Forward))
+        {
+            <div class="player-card">
+                <div class="player-info">
+                    <div class="player-text">@player.web_name (@player.event_points)</div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="line">
+        @foreach (var player in playerData.Skip(11).Take(4))
+        {
+            <div class="player-card">
+                <div class="player-info">
+                    <div class="player-text">@player.web_name (@player.event_points)</div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
 
 <table class="player-table">
     <thead>
         <tr>
             <th>Player</th>
             <th>Points</th>
+            <th>Price</th>
             <th>Team</th>
             <th>Position</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var player in playerData)
+        @foreach (var player in playerData.OrderBy(x => x.position))
         {
             <tr>
-                <td>@player.second_name</td>
+                <td>@player.web_name</td>
                 <td>@player.event_points</td>
+                <td>@player.now_cost</td>
                 <td>@player.teamName</td>
                 <td>@player.position</td>
             </tr>
