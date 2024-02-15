@@ -12,7 +12,7 @@
         public int cost_change_start_fall { get; set; }
         public int dreamteam_count { get; set; }
         public int element_type { get; set; }
-        public string ep_next { get; set; }
+        public float ep_next { get; set; }
         public string ep_this { get; set; }
         public int event_points { get; set; }
         public string first_name { get; set; }
@@ -92,6 +92,8 @@
         public double starts_per_90 { get; set; }
         public double clean_sheets_per_90 { get; set; }
         public Position position { get; set; }
+
+        public int bank { get; set; }
 
         public string teamName { get; set; }
     }

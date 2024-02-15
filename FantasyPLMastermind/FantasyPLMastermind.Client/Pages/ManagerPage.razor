@@ -35,14 +35,20 @@
 }
 
 <div class="container">
-    <h3>Squad: @teamData.teamName</h3>
+    <h3>Squad: @teamData.teamName</h3> <h3> TeamID: @teamId</h3>
     <div class="manager-info">
+        <p>TeamID = @teamId</p>
         <p>Current Gameweek Points: @teamData.gameweekPoints</p>
         <p>Rank in League: @teamData.rank</p>
         <p>Total Points: @teamData.totalPoints</p>
-        <p>Last Rank: @teamData.last_rank</p>
-        <p>Rank Movement: @teamData.rank_sort</p>
+        <p>Bank: @teamData.bank</p>
+        <p>Value: @teamData.value</p>
+        <p>Event Transfers: @teamData.event_transfers</p>
+        <p>Event Transfers Cost: @teamData.event_transfers_cost</p>
+        <p>Points on Bench: @teamData.points_on_bench</p>
         <p>Formation: @defCount-@midCount-@fwdCount</p>
+        <a href="@teamId/transfers"> Check Transfer History</a>
+
     </div>
     
 </div>
@@ -54,7 +60,7 @@
         {            
             <div class="player-card">
                 <div class="player-info">
-                    <div class="player-text">@player.web_name (@player.event_points)</div>
+                    <div class="player-text">@player.web_name (@player.event_points) <img src="~/TeamJersey/@player.teamName"> </div>
                 </div>
             </div>
         }
@@ -63,8 +69,11 @@
     
     <div class="line">
         @foreach (var player in playerData.Take(11).Where(p => p.position == Position.Defender))
-        {           
+        {
             <div class="player-card">
+                <div class="player-image">
+                    <img src="TeamJersey/@(player.teamName).png" alt="@player.teamName Jersey">
+                </div>
                 <div class="player-info">
                     <div class="player-text">@player.web_name (@player.event_points)</div>
                 </div>
@@ -77,6 +86,9 @@
         @foreach (var player in playerData.Take(11).Where(p => p.position == Position.Midfielder))
         {           
             <div class="player-card">
+                <div class="player-image">
+                    <img src="TeamJersey/@(player.teamName).png" alt="@player.teamName Jersey">
+                </div>
                 <div class="player-info">
                     <div class="player-text">@player.web_name (@player.event_points)</div>
                 </div>
@@ -89,6 +101,9 @@
         @foreach (var player in playerData.Take(11).Where(p => p.position == Position.Forward))
         {
             <div class="player-card">
+                <div class="player-image">
+                    <img src="TeamJersey/@(player.teamName).png" alt="@player.teamName Jersey">
+                </div>
                 <div class="player-info">
                     <div class="player-text">@player.web_name (@player.event_points)</div>
                 </div>
@@ -123,7 +138,7 @@
     <tbody>
         @foreach (var player in playerData.OrderBy(x => x.position))
         {
-            <tr>
+            <tr> 
                 <td>@player.web_name</td>
                 <td>@player.event_points</td>
                 <td>@player.now_cost</td>

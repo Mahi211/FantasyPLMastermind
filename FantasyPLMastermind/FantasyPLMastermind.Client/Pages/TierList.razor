@@ -1,7 +1,7 @@
 ﻿@page "/tierlist"
 @rendermode InteractiveWebAssembly
 @inject HttpClient Http
-<h3>TierList</h3>
+<h3>Current Trending Players</h3>
 
 
 <Styles> </Styles>
@@ -14,16 +14,12 @@
 
     protected override async Task OnInitializedAsync()
     {
-        try
-        {
+        
 
-            string baseUrl = "https://localhost:7214/";
-            playerData = await Http.GetFromJsonAsync<List<Player>>($"{baseUrl}api/player");           
-        }
-        catch(Exception ex)
-        {
-            Console.WriteLine(ex.Message);
-        }
+        string baseUrl = "https://localhost:7214/";
+        playerData = await Http.GetFromJsonAsync<List<Player>>($"{baseUrl}api/player");           
+        
+        
     }
     
 
@@ -35,8 +31,10 @@
     <thead>
         <tr>
             <th>Rank</th>
+            <th>Team</th>
             <th>Player</th>
             <th>Tier</th>
+            <th>Pick Rate</th>
             <th>Total Points</th>
             <th>Price</th>
             <th>Position</th>
@@ -46,14 +44,24 @@
         @foreach (var player in playerData.OrderByDescending(x => x.ep_next).Where(x => x.total_points > 10))
         {
             rank += 1;
-            <tr>
+            <tr>                      
                 <td>@rank</td>
-                <td>@player.web_name</td>
+                <td><img src="TeamJersey/@(player.teamName).png" /></td>
+                <td>
+                    <a href="@($"player/myplayer/{player.id}")">@player.web_name</a>
+                </td>
                 <td>@player.ep_next</td>
+                <td>@player.selected_by_percent%</td>
                 <td>@player.total_points</td>
-                <td>@player.now_cost £</td>
+                <td>@player.now_cost£</td>
                 <td>@player.position</td>
             </tr>
         }
     </tbody>
 </table>
+
+
+
+
+
+

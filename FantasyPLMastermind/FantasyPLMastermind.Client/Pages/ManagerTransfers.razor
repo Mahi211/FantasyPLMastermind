@@ -1,0 +1,47 @@
+﻿@page "/{teamId:int}/transfers"
+@inject HttpClient Http
+@rendermode InteractiveWebAssembly
+
+<Styles></Styles>
+<h3>ManagerTransfers</h3>
+
+@code {
+    public List<Transfer>? myTransferData = new();
+    [Parameter]
+    public int teamId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        string baseUrl = "https://localhost:7214";
+
+        myTransferData = await Http.GetFromJsonAsync<List<Transfer>>($"{baseUrl}/api/manager/transfers/{teamId}");
+
+
+    }
+}
+
+<table class="player-table">
+    <thead>
+        <tr>
+            <th>Player in</th>
+            <th>Price £</th>
+            <th>Player Out</th>
+            <th>Price £</th>
+            <th>Gameweek</th>
+            <th>Time of Substitution</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var transfer in myTransferData)
+        {
+            <tr>
+                <td>@transfer.playerIn</td>
+                <td>@transfer.PlayerInCost</td>
+                <td>@transfer.PlayerOut</td>
+                <td>@transfer.PlayerOutCost</td>
+                <td>@transfer.gameWeek</td>
+                <td>@transfer.time</td>
+            </tr>
+        }
+    </tbody>
+</table>

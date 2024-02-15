@@ -18,10 +18,10 @@
         public int years_active { get; set; }
         public int summary_overall_points { get; set; }
         public int summary_overall_rank { get; set; }
-        public int summary_event_points { get; set; }
-        public int summary_event_rank { get; set; }
+        public int? summary_event_points { get; set; }
+        public int? summary_event_rank { get; set; }
         public int current_event { get; set; }
-        public Leagues leagues { get; set; }
+        public League leagues { get; set; }
         public string name { get; set; }
         public bool name_change_blocked { get; set; }
         public List<int> entered_events { get; set; }
@@ -31,13 +31,7 @@
         public int last_deadline_total_transfers { get; set; }
 
 
-        public class Leagues
-        {
-            public Classic[] classic { get; set; }
-            public object[] h2h { get; set; }
-            public Cup cup { get; set; }
-            public Cup_Matches[] cup_matches { get; set; }
-        }
+
 
         public class Cup
         {
@@ -100,7 +94,7 @@
             public int entry_2_total { get; set; }
             public bool is_knockout { get; set; }
             public int league { get; set; }
-            public int winner { get; set; }
+            public int? winner { get; set; }
             public object seed_value { get; set; }
             public int _event { get; set; }
             public object tiebreak { get; set; }
